@@ -1,0 +1,24 @@
+JF_EXECUTABLE(
+  NAME 
+    profile-timer-singlethreaded
+  HEADERS
+    _timer.h
+  SOURCES
+    profile-timer-singlethreaded.cc
+    _timer.cc
+  DEPENDENCIES
+    jf-fd
+    jf-eventloop
+  )
+
+JF_EXECUTABLE(
+  NAME 
+    profile-timer-multithreaded
+  HEADERS
+    _timer.h
+  SOURCES
+    profile-timer-multithreaded.cc
+    _timer.cc
+  DEPENDENCIES
+    jf-fd
+  )

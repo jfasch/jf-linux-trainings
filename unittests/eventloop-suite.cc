@@ -1,4 +1,5 @@
 #include <jf-eventloop/eventloop-select.h>
+#include <jf-eventloop/eventloop-epoll.h>
 #include <jf-fd/socketpair.h>
 
 #include <boost/test/unit_test.hpp>
@@ -8,11 +9,8 @@ namespace {
 
 using namespace jf::linuxish;
 
-BOOST_AUTO_TEST_SUITE(EventLoopSuite)
-
-BOOST_AUTO_TEST_CASE(basic)
+static void test_basic(EventLoop& eventloop)
 {
-    EventLoop_Select eventloop;
     bool seen = false;
     SocketPair channel;
 
@@ -37,16 +35,15 @@ BOOST_AUTO_TEST_CASE(basic)
     while (! seen)
         eventloop.run_one();
 
-    BOOST_REQUIRE(eventloop.num_watch_in() == 1);
-    BOOST_REQUIRE(eventloop.num_watch_out() == 1);
+    assert(eventloop.num_in() == 1);
+    assert(eventloop.num_out() == 1);
 
     eventloop.unwatch_in(channel.left());
     eventloop.unwatch_out(channel.right());
 }
 
-BOOST_AUTO_TEST_CASE(unregister_while_in_callback)
+static void test_unregister_while_in_callback(EventLoop& eventloop)
 {
-    EventLoop_Select eventloop;
     bool seen = false;
     SocketPair channel;
 
@@ -73,8 +70,33 @@ BOOST_AUTO_TEST_CASE(unregister_while_in_callback)
     while (! seen)
         eventloop.run_one();
 
-    BOOST_REQUIRE(eventloop.num_watch_in() == 0);
-    BOOST_REQUIRE(eventloop.num_watch_out() == 0);
+    BOOST_REQUIRE(eventloop.num_in() == 0);
+    BOOST_REQUIRE(eventloop.num_out() == 0);
+}
+
+
+BOOST_AUTO_TEST_SUITE(EventLoopSuite)
+
+BOOST_AUTO_TEST_CASE(basic__select)
+{
+    EventLoop_select eventloop;
+    test_basic(eventloop);
+}
+BOOST_AUTO_TEST_CASE(basic__epoll)
+{
+    EventLoop_epoll eventloop;
+    test_basic(eventloop);
+}
+
+BOOST_AUTO_TEST_CASE(unregister_while_in_callback__select)
+{
+    EventLoop_select eventloop;
+    test_unregister_while_in_callback(eventloop);
+}
+BOOST_AUTO_TEST_CASE(unregister_while_in_callback__epoll)
+{
+    EventLoop_epoll eventloop;
+    test_unregister_while_in_callback(eventloop);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -8,11 +8,9 @@
 namespace jf {
 namespace linuxish {
 
-class EventLoop_Select : public EventLoop
+class EventLoop_select : public EventLoop
 {
 public:
-    virtual ~EventLoop_Select();
-
     virtual void watch_in(int fd, EventLoop::Handler);
     virtual void watch_out(int fd, EventLoop::Handler);
 
@@ -21,8 +19,8 @@ public:
 
     virtual void run_one();
 
-    size_t num_watch_in() const { return in_handlers_.size(); }
-    size_t num_watch_out() const { return out_handlers_.size(); }
+    virtual size_t num_in() const { return in_handlers_.size(); }
+    virtual size_t num_out() const { return out_handlers_.size(); }
 
 private:
     typedef std::map<int, EventLoop::Handler> HandlerSet;

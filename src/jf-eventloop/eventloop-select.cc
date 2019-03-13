@@ -8,41 +8,35 @@
 namespace jf {
 namespace linuxish {
 
-EventLoop_Select::~EventLoop_Select()
-{
-    assert(in_handlers_.size()==0);
-    assert(out_handlers_.size()==0);
-}
-
-void EventLoop_Select::watch_in(int fd, EventLoop::Handler h)
+void EventLoop_select::watch_in(int fd, EventLoop::Handler h)
 {
     std::pair<HandlerSet::iterator, bool> found =
         in_handlers_.insert(std::make_pair(fd, h));
     assert(found.second==true);
 }
 
-void EventLoop_Select::watch_out(int fd, EventLoop::Handler h)
+void EventLoop_select::watch_out(int fd, EventLoop::Handler h)
 {
     std::pair<HandlerSet::iterator, bool> found =
         out_handlers_.insert(std::make_pair(fd, h));
     assert(found.second==true);
 }
 
-void EventLoop_Select::unwatch_in(int fd)
+void EventLoop_select::unwatch_in(int fd)
 {
     HandlerSet::iterator found = in_handlers_.find(fd);
     assert(found!=in_handlers_.end());
     in_handlers_.erase(found);
 }
 
-void EventLoop_Select::unwatch_out(int fd)
+void EventLoop_select::unwatch_out(int fd)
 {
     HandlerSet::iterator found = out_handlers_.find(fd);
     assert(found!=out_handlers_.end());
     out_handlers_.erase(found);
 }
 
-void EventLoop_Select::run_one()
+void EventLoop_select::run_one()
 {
     int max_fd = 0;
     

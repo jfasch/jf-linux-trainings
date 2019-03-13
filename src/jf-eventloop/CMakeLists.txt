@@ -4,6 +4,10 @@ JF_LIBRARY(
   HEADERS
     eventloop.h
     eventloop-select.h
+    eventloop-epoll.h
   SOURCES
     eventloop-select.cc
+    eventloop-epoll.cc
+  DEPENDENCIES
+    jf-fd
   )

@@ -21,6 +21,9 @@ public:
     virtual void unwatch_out(int fd) = 0;
 
     virtual void run_one() = 0;
+
+    virtual size_t num_in() const = 0;
+    virtual size_t num_out() const = 0;
 };
 
 }

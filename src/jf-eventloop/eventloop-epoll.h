@@ -27,8 +27,7 @@ public:
 
     virtual void run_one();
 
-    virtual size_t num_in() const { return num_in_; }
-    virtual size_t num_out() const { return num_out_; }
+    size_t num_notifiers() const { return notifiers_.size(); }
 
 private:
     struct Notifier {

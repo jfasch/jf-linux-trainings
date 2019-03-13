@@ -35,9 +35,6 @@ static void test_basic(EventLoop& eventloop)
     while (! seen)
         eventloop.run_one();
 
-    assert(eventloop.num_in() == 1);
-    assert(eventloop.num_out() == 1);
-
     eventloop.unwatch_in(channel.left());
     eventloop.unwatch_out(channel.right());
 }
@@ -69,9 +66,6 @@ static void test_unregister_while_in_callback(EventLoop& eventloop)
     
     while (! seen)
         eventloop.run_one();
-
-    BOOST_REQUIRE(eventloop.num_in() == 0);
-    BOOST_REQUIRE(eventloop.num_out() == 0);
 }
 
 
@@ -81,11 +75,15 @@ BOOST_AUTO_TEST_CASE(basic__select)
 {
     EventLoop_select eventloop;
     test_basic(eventloop);
+
+    BOOST_REQUIRE_EQUAL(eventloop.num_in(), 0);
+    BOOST_REQUIRE_EQUAL(eventloop.num_out(), 0);
 }
 BOOST_AUTO_TEST_CASE(basic__epoll)
 {
     EventLoop_epoll eventloop;
     test_basic(eventloop);
+    BOOST_REQUIRE_EQUAL(eventloop.num_notifiers(), 0);
 }
 
 BOOST_AUTO_TEST_CASE(unregister_while_in_callback__select)

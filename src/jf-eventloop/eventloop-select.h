@@ -19,8 +19,8 @@ public:
 
     virtual void run_one();
 
-    virtual size_t num_in() const { return in_handlers_.size(); }
-    virtual size_t num_out() const { return out_handlers_.size(); }
+    size_t num_in() const { return in_handlers_.size(); }
+    size_t num_out() const { return out_handlers_.size(); }
 
 private:
     typedef std::map<int, EventLoop::Handler> HandlerSet;

@@ -10,29 +10,30 @@ namespace linuxish {
 class FD
 {
 public:
-    FD() : _fd(-1) {}
+    FD() : fd_(-1) {}
     explicit FD(int fd);
+    ~FD();
 
     FD(FD&& fd)
-    : _fd(fd._fd)
+    : fd_(fd.fd_)
     {
-        fd._fd = -1;
+        fd.fd_ = -1;
     }
     FD& operator=(FD&& fd)
     { 
-        _fd = fd._fd; 
-        fd._fd = -1; 
+        fd_ = fd.fd_;
+        fd.fd_ = -1;
         return *this;
     }
 
-    int fd() const { return _fd; }
-    operator int() const { return _fd; }
+    int fd() const { return fd_; }
+    operator int() const { return fd_; }
 
     ssize_t read(void* buf, size_t count);
     ssize_t write(const void *buf, size_t count);
 
 private:
-    int _fd;
+    int fd_;
 };
 
 }

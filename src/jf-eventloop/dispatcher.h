@@ -10,7 +10,7 @@ namespace linuxish {
 class Dispatcher
 {
 public:
-    using Handler = std::function<void(int/*fd*/)>;
+    using Handler = std::function<void(int/*fd*/, Dispatcher*)>;
     
 public:
     ~Dispatcher();
@@ -22,6 +22,9 @@ public:
     void unwatch_out(int fd);
 
     void dispatch();
+
+    size_t num_watch_in() const { return in_handlers_.size(); }
+    size_t num_watch_out() const { return out_handlers_.size(); }
 
 private:
     // should probably use hash_map instead, but gcc keeps giving me a

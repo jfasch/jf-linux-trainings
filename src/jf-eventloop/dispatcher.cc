@@ -80,14 +80,14 @@ void Dispatcher::dispatch()
             HandlerSet::const_iterator found = saved_in_handlers.find(fd);
             assert(found!=saved_in_handlers.end());
             if (in_handlers_.find(fd) != in_handlers_.end())
-                found->second(fd);
+                found->second(fd, this);
         }
     for (int fd=0; fd<=max_fd; fd++)
         if (FD_ISSET(fd, &out_fds)) {
             HandlerSet::const_iterator found = saved_out_handlers.find(fd);
             assert(found!=saved_out_handlers.end());
             if (out_handlers_.find(fd) != out_handlers_.end())
-                found->second(fd);
+                found->second(fd, this);
         }
 }
 

@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         num_active_timers++;
         timer.start();
         dispatcher.watch_in(timer.fd(),
-                           [&timer, &num_active_timers](int)
+                            [&timer, &num_active_timers](int, jf::linuxish::Dispatcher*)
                            {
                                switch (timer.wait_expire()) {
                                    case TimerWithStats::Continue::Yes:

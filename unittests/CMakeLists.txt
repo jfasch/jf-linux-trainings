@@ -1,0 +1,10 @@
+JF_TEST(
+  NAME
+    jf-test
+  SOURCES
+    jf-test.cc
+    eventloop-suite.cc
+  DEPENDENCIES
+    jf-eventloop
+    jf-fd
+  )

@@ -1,8 +1,4 @@
 # -----------------------------------------------------------------
-# JF_LIBRARY
-#
-# create and install a library, together with its header files
-# 
 # JF_LIBRARY(
 #   NAME <library-name>
 #   DEPENDENCIES <libraries that we depend on (optional)>
@@ -20,6 +16,8 @@ FUNCTION(JF_LIBRARY)
     MESSAGE(FATAL_ERROR "JF_LIBRARY: unparsed arguments (${JF_LIBRARY_UNPARSED_ARGUMENTS}) remain: ${ARGN}")
   endif()
 
+  FIND_PACKAGE(Threads)
+
   ADD_LIBRARY(${JF_LIBRARY_NAME} ${JF_LIBRARY_HEADERS} ${JF_LIBRARY_SOURCES})
   TARGET_LINK_LIBRARIES(${JF_LIBRARY_NAME} ${JF_LIBRARY_DEPENDENCIES} ${CMAKE_THREAD_LIBS_INIT})
 
@@ -32,10 +30,6 @@ FUNCTION(JF_LIBRARY)
 ENDFUNCTION(JF_LIBRARY)
 
 # -----------------------------------------------------------------
-# JF_EXECUTABLE
-#
-# create and install an executable
-# 
 # JF_EXECUTABLE(
 #   NAME <exe-name>
 #   DEPENDENCIES <libraries that we depend on (optional)>
@@ -49,8 +43,61 @@ FUNCTION(JF_EXECUTABLE)
     MESSAGE(FATAL_ERROR "JF_EXECUTABLE: unparsed arguments (${JF_EXECUTABLE_UNPARSED_ARGUMENTS}) remain: ${ARGN}")
   ENDIF()
 
-  ADD_EXECUTABLE(${JF_EXECUTABLE_NAME} ${JF_EXECUTABLE_HEADERS} ${JF_EXECUTABLE_SOURCES})
-  TARGET_LINK_LIBRARIES(${JF_EXECUTABLE_NAME} ${JF_EXECUTABLE_DEPENDENCIES} ${CMAKE_THREAD_LIBS_INIT})
+  FIND_PACKAGE(Threads)
+
+  ADD_EXECUTABLE(
+    ${JF_EXECUTABLE_NAME}
+
+    ${JF_EXECUTABLE_HEADERS}
+    ${JF_EXECUTABLE_SOURCES}
+    )
+
+  TARGET_LINK_LIBRARIES(
+    ${JF_EXECUTABLE_NAME}
+
+    ${JF_EXECUTABLE_DEPENDENCIES}
+    ${CMAKE_THREAD_LIBS_INIT}
+    )
+
   INSTALL(TARGETS ${JF_EXECUTABLE_NAME} DESTINATION bin)
 
 ENDFUNCTION(JF_EXECUTABLE)
+
+# -----------------------------------------------------------------
+# JF_TEST(
+#   NAME <exe-name>
+#   DEPENDENCIES <libraries that we depend on (optional)>
+#   HEADERS <header files (optional; if given *not* installed)>
+#   SOURCES <C and C++ implementation files>
+# )
+ # -----------------------------------------------------------------
+FUNCTION(JF_TEST)
+  CMAKE_PARSE_ARGUMENTS(JF_TEST "" "NAME" "HEADERS;SOURCES;DEPENDENCIES" ${ARGN})
+  IF (NOT  "${JF_TEST_UNPARSED_ARGUMENTS}" STREQUAL "")
+    MESSAGE(FATAL_ERROR "JF_TEST: unparsed arguments (${JF_TEST_UNPARSED_ARGUMENTS}) remain: ${ARGN}")
+  ENDIF()
+
+  FIND_PACKAGE(Threads)
+  FIND_PACKAGE(Boost REQUIRED COMPONENTS unit_test_framework)
+
+  ADD_EXECUTABLE(
+    ${JF_TEST_NAME}
+
+    ${JF_TEST_HEADERS}
+    ${JF_TEST_SOURCES}
+    )
+
+  TARGET_LINK_LIBRARIES(
+    ${JF_TEST_NAME}
+
+    ${JF_TEST_DEPENDENCIES}
+    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+    ${CMAKE_THREAD_LIBS_INIT}
+    )
+
+  ADD_TEST(
+    ${JF_TEST_NAME}
+    ${CMAKE_CURRENT_BINARY_DIR}/${JF_TEST_NAME}
+    )
+
+ENDFUNCTION(JF_TEST)

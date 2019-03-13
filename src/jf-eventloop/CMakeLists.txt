@@ -1,5 +1,9 @@
 JF_LIBRARY(
-  NAME jf-eventloop
-  HEADERS dispatcher.h
-  SOURCES dispatcher.cc
+  NAME
+    jf-eventloop
+  HEADERS
+    eventloop.h
+    eventloop-select.h
+  SOURCES
+    eventloop-select.cc
   )

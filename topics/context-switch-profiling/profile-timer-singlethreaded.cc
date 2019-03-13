@@ -1,6 +1,6 @@
 #include "_timer.h"
 
-#include <jf-eventloop/dispatcher.h>
+#include <jf-eventloop/eventloop-select.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -26,14 +26,14 @@ int main(int argc, char** argv)
     while (num_timers--)
         timers.emplace_back(interval, num_iterations);
 
-    jf::linuxish::Dispatcher dispatcher;
+    jf::linuxish::EventLoop_Select eventloop;
 
     size_t num_active_timers = 0;
     for (auto& timer: timers) {
         num_active_timers++;
         timer.start();
-        dispatcher.watch_in(timer.fd(),
-                            [&timer, &num_active_timers](int, jf::linuxish::Dispatcher*)
+        eventloop.watch_in(timer.fd(),
+                           [&timer, &num_active_timers](int, jf::linuxish::EventLoop*)
                            {
                                switch (timer.wait_expire()) {
                                    case TimerWithStats::Continue::Yes:
@@ -47,7 +47,7 @@ int main(int argc, char** argv)
     }
 
     while (num_active_timers)
-        dispatcher.dispatch();
+        eventloop.run_one();
 
     print_stats(timers);
     return 0;

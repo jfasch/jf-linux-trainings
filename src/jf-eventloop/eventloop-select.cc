@@ -1,47 +1,48 @@
-#include "dispatcher.h"
+#include "eventloop-select.h"
 
 #include <cassert>
 #include <sys/select.h>
 #include <errno.h>
 
+
 namespace jf {
 namespace linuxish {
 
-Dispatcher::~Dispatcher()
+EventLoop_Select::~EventLoop_Select()
 {
     assert(in_handlers_.size()==0);
     assert(out_handlers_.size()==0);
 }
 
-void Dispatcher::watch_in(int fd, Handler h)
+void EventLoop_Select::watch_in(int fd, EventLoop::Handler h)
 {
     std::pair<HandlerSet::iterator, bool> found =
         in_handlers_.insert(std::make_pair(fd, h));
     assert(found.second==true);
 }
 
-void Dispatcher::watch_out(int fd, Handler h)
+void EventLoop_Select::watch_out(int fd, EventLoop::Handler h)
 {
     std::pair<HandlerSet::iterator, bool> found =
         out_handlers_.insert(std::make_pair(fd, h));
     assert(found.second==true);
 }
 
-void Dispatcher::unwatch_in(int fd)
+void EventLoop_Select::unwatch_in(int fd)
 {
     HandlerSet::iterator found = in_handlers_.find(fd);
     assert(found!=in_handlers_.end());
     in_handlers_.erase(found);
 }
 
-void Dispatcher::unwatch_out(int fd)
+void EventLoop_Select::unwatch_out(int fd)
 {
     HandlerSet::iterator found = out_handlers_.find(fd);
     assert(found!=out_handlers_.end());
     out_handlers_.erase(found);
 }
 
-void Dispatcher::dispatch()
+void EventLoop_Select::run_one()
 {
     int max_fd = 0;
     
@@ -77,14 +78,14 @@ void Dispatcher::dispatch()
     // during the callback phase.
     for (int fd=0; fd<=max_fd; fd++)
         if (FD_ISSET(fd, &in_fds)) {
-            HandlerSet::const_iterator found = saved_in_handlers.find(fd);
+            auto found = saved_in_handlers.find(fd);
             assert(found!=saved_in_handlers.end());
             if (in_handlers_.find(fd) != in_handlers_.end())
                 found->second(fd, this);
         }
     for (int fd=0; fd<=max_fd; fd++)
         if (FD_ISSET(fd, &out_fds)) {
-            HandlerSet::const_iterator found = saved_out_handlers.find(fd);
+            auto found = saved_out_handlers.find(fd);
             assert(found!=saved_out_handlers.end());
             if (out_handlers_.find(fd) != out_handlers_.end())
                 found->second(fd, this);

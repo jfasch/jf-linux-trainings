@@ -64,12 +64,6 @@ void EventLoop_Select::run_one()
         max_fd = std::max(max_fd, i->first);
     }
 
-    // save away handler sets for later usage as the live ones may be
-    // changed during the callback phase. this should probably be
-    // optimized a bit as this is done quite often.
-    HandlerSet saved_in_handlers(in_handlers_);
-    HandlerSet saved_out_handlers(out_handlers_);
-
     int retval = ::select(max_fd+1, &in_fds, &out_fds, NULL, NULL);
     assert(retval != -1);
 
@@ -78,16 +72,14 @@ void EventLoop_Select::run_one()
     // during the callback phase.
     for (int fd=0; fd<=max_fd; fd++)
         if (FD_ISSET(fd, &in_fds)) {
-            auto found = saved_in_handlers.find(fd);
-            assert(found!=saved_in_handlers.end());
-            if (in_handlers_.find(fd) != in_handlers_.end())
+            auto found = in_handlers_.find(fd);
+            if (found != in_handlers_.end())
                 found->second(fd, this);
         }
     for (int fd=0; fd<=max_fd; fd++)
         if (FD_ISSET(fd, &out_fds)) {
-            auto found = saved_out_handlers.find(fd);
-            assert(found!=saved_out_handlers.end());
-            if (out_handlers_.find(fd) != out_handlers_.end())
+            auto found = out_handlers_.find(fd);
+            if (found != out_handlers_.end())
                 found->second(fd, this);
         }
 }

@@ -8,7 +8,7 @@ namespace {
 
 using namespace jf::linuxish;
 
-BOOST_AUTO_TEST_SUITE(EventloopSuite)
+BOOST_AUTO_TEST_SUITE(EventLoopSuite)
 
 BOOST_AUTO_TEST_CASE(basic)
 {

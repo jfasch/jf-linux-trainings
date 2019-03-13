@@ -1,2 +1,5 @@
 * profile-timer-singlethreaded.cc: use epoll
-* epoll: use sorted vector to eliminate cache misses
+* EventLoop
+
+  * epoll: use sorted vector to eliminate cache misses
+  * remove num_{in,out} from interface

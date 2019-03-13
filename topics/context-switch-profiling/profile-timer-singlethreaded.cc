@@ -1,6 +1,6 @@
 #include "_timer.h"
 
-#include <jf-eventloop/eventloop-select.h>
+#include <jf-eventloop/eventloop-epoll.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     while (num_timers--)
         timers.emplace_back(interval, num_iterations);
 
-    jf::linuxish::EventLoop_Select eventloop;
+    jf::linuxish::EventLoop_epoll eventloop;
 
     size_t num_active_timers = 0;
     for (auto& timer: timers) {

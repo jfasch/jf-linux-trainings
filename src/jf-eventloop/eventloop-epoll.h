@@ -36,17 +36,15 @@ private:
     };
     typedef std::map<int, Notifier> Notifiers;
     Notifiers notifiers_;
-    size_t num_in_;
-    size_t num_out_;
     
     std::vector<epoll_event> events_;
 
     FD epoll_fd_;
 
 private:
-    epoll_event create_event_(int fd, const Notifier& notifier);
-    Notifier& make_notifier_(int fd, int& epoll_op);
-    void update_notifier_(int fd, Notifier&, Notifiers::iterator);
+    epoll_event make_event_(Notifiers::iterator);
+    Notifiers::iterator make_notifier_(int fd, int& epoll_op);
+    void update_(Notifiers::iterator);
 };
 
 }

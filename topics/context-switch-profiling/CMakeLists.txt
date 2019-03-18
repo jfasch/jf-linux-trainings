@@ -1,6 +1,6 @@
 JF_EXECUTABLE(
   NAME 
-    profile-timer-singlethreaded
+    jf-profile-timer-singlethreaded
   HEADERS
     _timer.h
   SOURCES
@@ -13,7 +13,7 @@ JF_EXECUTABLE(
 
 JF_EXECUTABLE(
   NAME 
-    profile-timer-multithreaded
+    jf-profile-timer-multithreaded
   HEADERS
     _timer.h
   SOURCES

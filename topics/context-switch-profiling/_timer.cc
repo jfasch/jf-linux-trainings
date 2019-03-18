@@ -12,7 +12,7 @@ TimerWithStats::Continue TimerWithStats::wait_expire()
 
     size_t num_late = n_expiries - 1;
 
-    // we are expecting 1 expiration per wakeup. if there were
+    // we are expecting 1 expiration per wakeup. if there have been
     // more, those are late.
     _stats.num_late += num_late;
     // max

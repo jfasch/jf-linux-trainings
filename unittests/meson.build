@@ -1,4 +1,4 @@
-boost_test = dependency('boost', modules: ['test'])
+boost_test = dependency('boost', modules: ['unit_test_framework'])
 
 testbin = executable(
     'jf-test',

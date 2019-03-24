@@ -8,7 +8,7 @@ SINGLETHREADED_PROGRAM = 'jf-profile-timer-singlethreaded'
 NUM_EXPIRIES = 10000
 #NUM_EXPIRIES = 100
 INTERVAL_MS = 1
-NUM_PARALLEL_TIMERS = (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+NUM_PARALLEL_TIMERS = (10, 20, 30, 50, 70, 100, 150)
 
 MULTITHREADED_STATS_FILE = 'multithreaded-all.stats'
 SINGLETHREADED_STATS_FILE = 'singlethreaded-all.stats'

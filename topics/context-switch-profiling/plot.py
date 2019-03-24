@@ -110,7 +110,11 @@ def main():
                #       'perf.context-switches',
                #       'perf.dTLB-load-misses',
                #       'perf.iTLB-load-misses'),
-               keys=('perf.cache-misses',),
+               keys=('perf.LLC-load-misses',),
+               # keys=('perf.L1-dcache-load-misses',
+               #       'perf.L1-icache-load-misses',
+               #       'perf.dTLB-load-misses',
+               #       'perf.iTLB-load-misses'),
                ylabel='num').write_png(f)
 
 

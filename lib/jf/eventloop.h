@@ -1,10 +1,9 @@
-#ifndef JF_LINUXISH__JF_EVENTLOOP__EVENTLOOP_H
-#define JF_LINUXISH__JF_EVENTLOOP__EVENTLOOP_H
+#ifndef JF__EVENTLOOP_H
+#define JF__EVENTLOOP_H
 
 #include <functional>
 
 namespace jf {
-namespace linuxish {
 
 class EventLoop
 {
@@ -23,7 +22,6 @@ public:
     virtual void run_one() = 0;
 };
 
-}
 }
 
 #endif

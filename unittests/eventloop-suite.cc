@@ -1,22 +1,20 @@
-#include <jf-eventloop/eventloop-select.h>
-#include <jf-eventloop/eventloop-epoll.h>
-#include <jf-fd/socketpair.h>
+#include <jf/eventloop-select.h>
+#include <jf/eventloop-epoll.h>
+#include <jf/socketpair.h>
 
 #include <boost/test/unit_test.hpp>
 
 
 namespace {
 
-using namespace jf::linuxish;
-
-static void test_basic(EventLoop& eventloop)
+static void test_basic(jf::EventLoop& eventloop)
 {
     bool seen = false;
-    SocketPair channel;
+    jf::SocketPair channel;
 
     eventloop.watch_out(
         channel.right(),
-        [&channel](int, EventLoop*)
+        [&channel](int, jf::EventLoop*)
         {
             char dummy = 'x';
             ssize_t nwritten = channel.right().write(&dummy, sizeof(dummy));
@@ -24,7 +22,7 @@ static void test_basic(EventLoop& eventloop)
         });
     eventloop.watch_in(
         channel.left(), 
-        [&channel, &seen](int, EventLoop*)
+        [&channel, &seen](int, jf::EventLoop*)
         {
             char dummy;
             ssize_t nread = channel.left().read(&dummy, sizeof(dummy));
@@ -39,14 +37,14 @@ static void test_basic(EventLoop& eventloop)
     eventloop.unwatch_out(channel.right());
 }
 
-static void test_unregister_while_in_callback(EventLoop& eventloop)
+static void test_unregister_while_in_callback(jf::EventLoop& eventloop)
 {
     bool seen = false;
-    SocketPair channel;
+    jf::SocketPair channel;
 
     eventloop.watch_out(
         channel.right(),
-        [&channel](int fd, EventLoop* eventloop)
+        [&channel](int fd, jf::EventLoop* eventloop)
         {
             char dummy = 'x';
             ssize_t nwritten = channel.right().write(&dummy, sizeof(dummy));
@@ -55,7 +53,7 @@ static void test_unregister_while_in_callback(EventLoop& eventloop)
         });
     eventloop.watch_in(
         channel.left(), 
-        [&channel, &seen](int fd, EventLoop* eventloop)
+        [&channel, &seen](int fd, jf::EventLoop* eventloop)
         {
             char dummy;
             ssize_t nread = channel.left().read(&dummy, sizeof(dummy));
@@ -73,7 +71,7 @@ BOOST_AUTO_TEST_SUITE(EventLoopSuite)
 
 BOOST_AUTO_TEST_CASE(basic__select)
 {
-    EventLoop_select eventloop;
+    jf::EventLoop_select eventloop;
     test_basic(eventloop);
 
     BOOST_REQUIRE_EQUAL(eventloop.num_in(), 0);
@@ -81,19 +79,19 @@ BOOST_AUTO_TEST_CASE(basic__select)
 }
 BOOST_AUTO_TEST_CASE(basic__epoll)
 {
-    EventLoop_epoll eventloop;
+    jf::EventLoop_epoll eventloop;
     test_basic(eventloop);
     BOOST_REQUIRE_EQUAL(eventloop.num_notifiers(), 0);
 }
 
 BOOST_AUTO_TEST_CASE(unregister_while_in_callback__select)
 {
-    EventLoop_select eventloop;
+    jf::EventLoop_select eventloop;
     test_unregister_while_in_callback(eventloop);
 }
 BOOST_AUTO_TEST_CASE(unregister_while_in_callback__epoll)
 {
-    EventLoop_epoll eventloop;
+    jf::EventLoop_epoll eventloop;
     test_unregister_while_in_callback(eventloop);
 }
 

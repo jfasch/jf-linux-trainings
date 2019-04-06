@@ -1,11 +1,10 @@
-#ifndef JF_LINUXISH__JF_FD__SOCKETPAIR_H
-#define JF_LINUXISH__JF_FD__SOCKETPAIR_H
+#ifndef JF__SOCKETPAIR_H
+#define JF__SOCKETPAIR_H
 
 #include "fd.h"
 
 
 namespace jf {
-namespace linuxish {
 
 class SocketPair
 {
@@ -20,7 +19,6 @@ private:
     FD _right;
 };
 
-}
 }
 
 #endif

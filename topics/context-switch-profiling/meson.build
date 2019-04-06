@@ -3,7 +3,7 @@ executable(
     ['profile-timer-singlethreaded.cc', '_timer.cc'],
     ['_timer.h'],
     include_directories: common_includedir,
-    link_with: [jf_eventloop_lib, jf_fd_lib],
+    link_with: [jf_lib],
 )
 
 executable(
@@ -11,6 +11,6 @@ executable(
     ['profile-timer-multithreaded.cc', '_timer.cc'],
     ['_timer.h'],
     include_directories: common_includedir,
-    link_with: [jf_fd_lib],
+    link_with: [jf_lib],
     dependencies: [thread_dep],
 )

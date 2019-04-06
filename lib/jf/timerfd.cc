@@ -6,7 +6,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 // -----------------------------------------------------------
 // internal helpers
@@ -65,5 +64,4 @@ void PeriodicTimerFD::stop()
     _stop_fd(fd());
 }
 
-}
 }

@@ -1,6 +1,6 @@
 #include "_timer.h"
 
-#include <jf-eventloop/eventloop-epoll.h>
+#include <jf/eventloop-epoll.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -26,14 +26,14 @@ int main(int argc, char** argv)
     while (num_timers--)
         timers.emplace_back(interval, num_iterations);
 
-    jf::linuxish::EventLoop_epoll eventloop;
+    jf::EventLoop_epoll eventloop;
 
     size_t num_active_timers = 0;
     for (auto& timer: timers) {
         num_active_timers++;
         timer.start();
         eventloop.watch_in(timer.fd(),
-                           [&timer, &num_active_timers](int, jf::linuxish::EventLoop*)
+                           [&timer, &num_active_timers](int, jf::EventLoop*)
                            {
                                switch (timer.wait_expire()) {
                                    case TimerWithStats::Continue::Yes:

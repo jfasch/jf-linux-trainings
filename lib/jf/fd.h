@@ -1,11 +1,10 @@
-#ifndef JF_LINUXISH__JF_FD__FD_H
-#define JF_LINUXISH__JF_FD__FD_H
+#ifndef JF__FD_H
+#define JF__FD_H
 
 #include <unistd.h>
 
 
 namespace jf {
-namespace linuxish {
 
 class FD
 {
@@ -36,7 +35,6 @@ private:
     int fd_;
 };
 
-}
 }
 
 #endif

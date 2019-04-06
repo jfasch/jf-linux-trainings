@@ -5,7 +5,7 @@ testbin = executable(
     ['jf-test.cc', 
      'eventloop-suite.cc'],
     include_directories: common_includedir,
-    link_with: [jf_eventloop_lib, jf_fd_lib],
+    link_with: [jf_lib],
     dependencies: boost_test,
 )
 

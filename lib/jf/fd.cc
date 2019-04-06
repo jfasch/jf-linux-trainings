@@ -4,7 +4,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 FD::FD(int fd) : fd_(fd)
 {
@@ -29,5 +28,4 @@ ssize_t FD::write(const void *buf, size_t count)
     return ::write(fd_, buf, count);
 }
 
-}
 }

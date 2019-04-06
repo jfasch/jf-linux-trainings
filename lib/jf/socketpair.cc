@@ -6,7 +6,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 SocketPair::SocketPair()
 {
@@ -18,5 +17,4 @@ SocketPair::SocketPair()
     _right = FD(ends[1]);
 }
 
-}
 }

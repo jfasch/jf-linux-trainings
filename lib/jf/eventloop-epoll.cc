@@ -5,7 +5,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 EventLoop_epoll::EventLoop_epoll()
 : epoll_fd_(::epoll_create1(0))
@@ -136,5 +135,4 @@ void EventLoop_epoll::update_(
     }
 }
 
-}
 }

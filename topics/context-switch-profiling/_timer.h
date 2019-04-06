@@ -1,6 +1,6 @@
 #pragma once
 
-#include <jf-fd/timerfd.h>
+#include <jf/timerfd.h>
 
 #include <iostream>
 #include <cassert>
@@ -25,7 +25,7 @@ public:
     };
 
 public:
-    TimerWithStats(jf::linuxish::TimeSpec interval, size_t num_expiries)
+    TimerWithStats(jf::TimeSpec interval, size_t num_expiries)
     : _timerfd(interval),
       _cur_expiries(0),
       _num_expiries(num_expiries) {}
@@ -38,7 +38,7 @@ public:
     Stats stats() const { return _stats; }
 
 private:
-    jf::linuxish::PeriodicTimerFD _timerfd;
+    jf::PeriodicTimerFD _timerfd;
     size_t _cur_expiries;
     const size_t _num_expiries;
 

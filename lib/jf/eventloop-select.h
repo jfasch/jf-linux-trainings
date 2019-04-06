@@ -1,12 +1,11 @@
-#ifndef JF_LINUXISH__JF_EVENTLOOP__EVENTLOOP_SELECT_H
-#define JF_LINUXISH__JF_EVENTLOOP__EVENTLOOP_SELECT_H
+#ifndef JF__EVENTLOOP_SELECT_H
+#define JF__EVENTLOOP_SELECT_H
 
 #include "eventloop.h"
 
 #include <map>
 
 namespace jf {
-namespace linuxish {
 
 class EventLoop_select : public EventLoop
 {
@@ -28,7 +27,6 @@ private:
     HandlerSet out_handlers_;
 };
 
-}
 }
 
 #endif

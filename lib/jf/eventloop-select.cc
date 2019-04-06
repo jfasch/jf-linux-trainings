@@ -6,7 +6,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 void EventLoop_select::watch_in(int fd, EventLoop::Handler h)
 {
@@ -78,5 +77,4 @@ void EventLoop_select::run_one()
         }
 }
 
-}
 }

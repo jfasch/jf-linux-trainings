@@ -1,9 +1,9 @@
-#ifndef JF_LINUXISH__JF_EVENTLOOP__EVENTLOOP_EPOLL_H
-#define JF_LINUXISH__JF_EVENTLOOP__EVENTLOOP_EPOLL_H
+#ifndef JF__EVENTLOOP_EPOLL_H
+#define JF__EVENTLOOP_EPOLL_H
 
 #include "eventloop.h"
 
-#include <jf-fd/fd.h>
+#include "fd.h"
 
 #include <vector>
 #include <map>
@@ -12,7 +12,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 class EventLoop_epoll : public EventLoop, public FD
 {
@@ -47,7 +46,6 @@ private:
     void update_(Notifiers::iterator);
 };
 
-}
 }
 
 #endif

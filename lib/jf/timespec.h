@@ -1,12 +1,11 @@
-#ifndef JF_LINUXISH__JF_FD__TIMESPEC_H
-#define JF_LINUXISH__JF_FD__TIMESPEC_H
+#ifndef JF__TIMESPEC_H
+#define JF__TIMESPEC_H
 
 #include <cstring>
 #include <ctime>
 
 
 namespace jf {
-namespace linuxish {
 
 /** Convenience wrapper around struct timespec
 
@@ -24,7 +23,6 @@ struct TimeSpec : public timespec
     TimeSpec& nsec(long ns) { tv_nsec = ns; return *this; }
 };
 
-}
 }
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef JF_LINUXISH__JF_FD__TIMERFD_H
-#define JF_LINUXISH__JF_FD__TIMERFD_H
+#ifndef JF__TIMERFD_H
+#define JF__TIMERFD_H
 
 #include "fd.h"
 #include "timespec.h"
@@ -8,7 +8,6 @@
 
 
 namespace jf {
-namespace linuxish {
 
 /** Wrapper around periodic timerfd
 
@@ -28,7 +27,6 @@ private:
     TimeSpec _interval;
 };
 
-}
 }
 
 #endif

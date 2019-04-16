@@ -1,0 +1,75 @@
+#include "posix-message-queue.h"
+
+#include "exception.h"
+
+#include <cstring>
+#include <cassert>
+
+
+namespace jf {
+
+POSIXMessageQueue::Attr::Attr()
+{
+    memset(this, 0, sizeof(*this));
+}
+
+POSIXMessageQueue POSIXMessageQueue::create(
+    const std::string& path, 
+    int oflag, 
+    mode_t mode, 
+    const Attr& attr)
+{
+    oflag |= O_CREAT;
+
+    mqd_t mq = mq_open(path.c_str(), oflag, mode, &attr);
+    if (mq < 0)
+        throw ErrnoException(errno, "mq_open(O_CREAT)");
+
+    POSIXMessageQueue ret;
+    ret.fd_ = FD(mq);
+    return ret;
+}
+
+POSIXMessageQueue POSIXMessageQueue::open(
+    const std::string& path, 
+    int oflag)
+{
+    assert(!(oflag&O_CREAT));
+    
+    mqd_t mq = mq_open(path.c_str(), oflag);
+    if (mq < 0)
+        throw ErrnoException(errno, "mq_open()");
+
+    POSIXMessageQueue ret;
+    ret.fd_ = FD(mq);
+    return ret;
+}
+
+void POSIXMessageQueue::unlink(
+    const std::string& path)
+{
+    if (mq_unlink(path.c_str()) < 0)
+        throw ErrnoException(errno, "mq_unlink()");
+}
+
+void POSIXMessageQueue::send(
+    const char* msg, 
+    size_t msg_len, 
+    unsigned priority)
+{
+    if (mq_send(fd_, msg, msg_len, priority) < 0)
+        throw ErrnoException(errno, "mq_send()");
+}
+
+size_t POSIXMessageQueue::receive(
+    char* msg, 
+    size_t msg_len)
+{
+    unsigned prio;
+    ssize_t nread = mq_receive(fd_, msg, msg_len, &prio);
+    if (nread < 0)
+        throw ErrnoException(errno, "mq_receive()");
+    return nread;
+}
+
+}

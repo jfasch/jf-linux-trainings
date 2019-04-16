@@ -13,5 +13,11 @@ jf_lib = library(
         'timespec.h',
         'timerfd.h',
         'timerfd.cc',
+	'work-queue.h',
+	'work-queue.cc',
+        'posix-message-queue.h',
+	'posix-message-queue.cc',
     ],
-    install: true)
+    install: true,
+    dependencies: [thread_dep, librt],
+)

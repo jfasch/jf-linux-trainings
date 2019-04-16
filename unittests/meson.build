@@ -6,6 +6,7 @@ testbin = executable(
      'eventloop-suite.cc',
      'work-queue-suite.cc',
      'posix-message-queue-suite.cc',
+     'graceful-eventloop-termination-suite.cc',
     ],
     include_directories: common_includedir,
     link_with: [jf_lib],

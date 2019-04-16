@@ -28,4 +28,11 @@ ssize_t FD::write(const void *buf, size_t count)
     return ::write(fd_, buf, count);
 }
 
+void FD::close()
+{
+    assert(fd_>=0);
+    ::close(fd_);
+    fd_ = -1;
+}
+
 }

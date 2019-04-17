@@ -13,7 +13,7 @@ int main()
     message.request = message_A::request::SAYHELLO_DELEGATE_TO_B;
     strcpy(message.payload, "hello!");
 
-    q.send(&message, sizeof(message), /*priority*/0);
+    q.send(message, /*priority*/0);
     
     return 0;
 }

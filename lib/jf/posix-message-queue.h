@@ -30,8 +30,14 @@ public:
     static void unlink(const std::string& path);
 
 public:
-    void send(const void* msg, size_t msg_len, unsigned priority);
+    void send_raw(const void* msg, size_t msg_len, unsigned priority);
     size_t receive_raw(void* msg, size_t msg_len);
+    
+    template <typename MESSAGE>
+    void send(const MESSAGE& message, unsigned priority)
+    {
+        send_raw(&message, sizeof(message), priority);
+    }
 
     template <typename MESSAGE>
     void receive(MESSAGE& message)

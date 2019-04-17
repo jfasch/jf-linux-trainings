@@ -40,7 +40,7 @@ int main()
                                   message_B message_b;
                                   message_b.request = message_B::request::SAYHELLO;
                                   strcpy(message_b.payload, message.payload);
-                                  b_q.send(&message_b, sizeof(message_b), /*priority*/0);
+                                  b_q.send(message_b, /*priority*/0);
                                   break;
                           }
                       });

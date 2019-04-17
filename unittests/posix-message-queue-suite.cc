@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(basic)
         jf::POSIXMessageQueue::open(mq_name, O_RDONLY);
 
     char msg_sent = 'a';
-    mq_produce.send(&msg_sent, 1, 0);
+    mq_produce.send_raw(&msg_sent, 1, 0);
     char  msg_received = 0; // valgrind has no idea what mq_receive()
                             // is
     size_t nread = mq_consume.receive_raw(&msg_received, 1);
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(UnrelatedProcessesUsingSameMQ)
     if (producer == 0) { // child
         jf::POSIXMessageQueue mq_produce = jf::POSIXMessageQueue::open(mq_name, O_WRONLY);
         const char c = 'a'; 
-        mq_produce.send(&c, 1, 0);
+        mq_produce.send_raw(&c, 1, 0);
         _exit(0);
     }
     pid_t consumer = fork();

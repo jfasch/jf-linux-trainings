@@ -52,7 +52,7 @@ void POSIXMessageQueue::unlink(
         throw ErrnoException(errno, "mq_unlink()");
 }
 
-void POSIXMessageQueue::send(
+void POSIXMessageQueue::send_raw(
     const void* msg, 
     size_t msg_len, 
     unsigned priority)

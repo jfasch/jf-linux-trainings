@@ -53,20 +53,20 @@ void POSIXMessageQueue::unlink(
 }
 
 void POSIXMessageQueue::send(
-    const char* msg, 
+    const void* msg, 
     size_t msg_len, 
     unsigned priority)
 {
-    if (mq_send(fd_, msg, msg_len, priority) < 0)
+    if (mq_send(fd_, (const char*)msg, msg_len, priority) < 0)
         throw ErrnoException(errno, "mq_send()");
 }
 
 size_t POSIXMessageQueue::receive(
-    char* msg, 
+    void* msg, 
     size_t msg_len)
 {
     unsigned prio;
-    ssize_t nread = mq_receive(fd_, msg, msg_len, &prio);
+    ssize_t nread = mq_receive(fd_, (char*)msg, msg_len, &prio);
     if (nread < 0)
         throw ErrnoException(errno, "mq_receive()");
     return nread;

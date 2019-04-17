@@ -25,8 +25,10 @@ public:
     static void unlink(const std::string& path);
 
 public:
-    void send(const char* msg, size_t msg_len, unsigned priority);
-    size_t receive(char* msg, size_t msg_len);
+    void send(const void* msg, size_t msg_len, unsigned priority);
+    size_t receive(void* msg, size_t msg_len);
+
+    const FD& fd() const { return fd_; }
 
 private:
     FD fd_;

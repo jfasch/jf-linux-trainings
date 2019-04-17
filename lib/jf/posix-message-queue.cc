@@ -61,7 +61,7 @@ void POSIXMessageQueue::send(
         throw ErrnoException(errno, "mq_send()");
 }
 
-size_t POSIXMessageQueue::receive(
+size_t POSIXMessageQueue::receive_raw(
     void* msg, 
     size_t msg_len)
 {

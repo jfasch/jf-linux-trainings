@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(basic)
     mq_produce.send(&msg_sent, 1, 0);
     char  msg_received = 0; // valgrind has no idea what mq_receive()
                             // is
-    size_t nread = mq_consume.receive(&msg_received, 1);
+    size_t nread = mq_consume.receive_raw(&msg_received, 1);
 
     BOOST_REQUIRE_EQUAL(nread, 1);
     BOOST_REQUIRE_EQUAL(msg_received, 'a');
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(UnrelatedProcessesUsingSameMQ)
     if (consumer == 0) { // child
         jf::POSIXMessageQueue mq_consume = jf::POSIXMessageQueue::open(mq_name, O_RDONLY);
         char c = 0; // valgrind does not know about mq_receive()
-        size_t nread = mq_consume.receive(&c, 1);
+        size_t nread = mq_consume.receive_raw(&c, 1);
         if (nread != 1)
             _exit(1);
         if (c != 'a')

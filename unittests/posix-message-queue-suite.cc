@@ -41,11 +41,11 @@ BOOST_FIXTURE_TEST_SUITE(POSIXMessageQueueSuite, MyFixture)
 
 BOOST_AUTO_TEST_CASE(basic)
 {
-    jf::POSIXMessageQueue mq_produce = 
-        jf::POSIXMessageQueue::create(mq_name, O_WRONLY, 0600, 
-                                      jf::POSIXMessageQueue::Attr().set_maxmsg(5).set_msgsize(1));
-    jf::POSIXMessageQueue mq_consume = 
-        jf::POSIXMessageQueue::open(mq_name, O_RDONLY);
+    jf::POSIXMessageQueue mq_produce = jf::POSIXMessageQueue::create_raw(
+        mq_name, O_WRONLY, 0600, 
+        jf::POSIXMessageQueue::Attr().set_maxmsg(5).set_msgsize(1));
+    jf::POSIXMessageQueue mq_consume = jf::POSIXMessageQueue::open_raw(
+        mq_name, O_RDONLY);
 
     char msg_sent = 'a';
     mq_produce.send_raw(&msg_sent, 1, 0);
@@ -61,19 +61,20 @@ BOOST_AUTO_TEST_CASE(UnrelatedProcessesUsingSameMQ)
 {
     // message queue created by one central authority. that authority
     // does not make use of it.
-    jf::POSIXMessageQueue::create(mq_name, O_RDWR, 0600, 
-                                  jf::POSIXMessageQueue::Attr().set_maxmsg(5).set_msgsize(1));
+    jf::POSIXMessageQueue::create_raw(
+        mq_name, O_RDWR, 0600, 
+        jf::POSIXMessageQueue::Attr().set_maxmsg(5).set_msgsize(1));
 
     pid_t producer = fork();
     if (producer == 0) { // child
-        jf::POSIXMessageQueue mq_produce = jf::POSIXMessageQueue::open(mq_name, O_WRONLY);
+        jf::POSIXMessageQueue mq_produce = jf::POSIXMessageQueue::open_raw(mq_name, O_WRONLY);
         const char c = 'a'; 
         mq_produce.send_raw(&c, 1, 0);
         _exit(0);
     }
     pid_t consumer = fork();
     if (consumer == 0) { // child
-        jf::POSIXMessageQueue mq_consume = jf::POSIXMessageQueue::open(mq_name, O_RDONLY);
+        jf::POSIXMessageQueue mq_consume = jf::POSIXMessageQueue::open_raw(mq_name, O_RDONLY);
         char c = 0; // valgrind does not know about mq_receive()
         size_t nread = mq_consume.receive_raw(&c, 1);
         if (nread != 1)

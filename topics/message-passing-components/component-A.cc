@@ -23,7 +23,7 @@ int main()
                       });
 
         // add message queue to loop
-        jf::POSIXMessageQueue message_queue = jf::POSIXMessageQueue::open(queue_name_A, O_RDONLY);        
+        jf::POSIXMessageQueue message_queue = jf::POSIXMessageQueue::open<message_A>(queue_name_A, O_RDONLY);        
         loop.watch_in(message_queue.fd(),
                       [&message_queue](int,jf::EventLoop*)
                       {
@@ -36,7 +36,7 @@ int main()
                                   break;
                               case message_A::request::SAYHELLO_DELEGATE_TO_B:
                                   // delegate to component B
-                                  jf::POSIXMessageQueue b_q = jf::POSIXMessageQueue::open(queue_name_B, O_WRONLY);
+                                  jf::POSIXMessageQueue b_q = jf::POSIXMessageQueue::open<message_B>(queue_name_B, O_WRONLY);
                                   message_B message_b;
                                   message_b.request = message_B::request::SAYHELLO;
                                   strcpy(message_b.payload, message.payload);

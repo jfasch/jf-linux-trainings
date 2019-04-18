@@ -22,7 +22,7 @@ int main()
                       });
 
         // add message queue to loop
-        jf::POSIXMessageQueue message_queue = jf::POSIXMessageQueue::open(queue_name_B, O_RDONLY);        
+        jf::POSIXMessageQueue message_queue = jf::POSIXMessageQueue::open<message_B>(queue_name_B, O_RDONLY);
         loop.watch_in(message_queue.fd(),
                       [&message_queue](int,jf::EventLoop*)
                       {

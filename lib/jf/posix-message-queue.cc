@@ -13,7 +13,7 @@ POSIXMessageQueue::Attr::Attr()
     memset(this, 0, sizeof(*this));
 }
 
-POSIXMessageQueue POSIXMessageQueue::create(
+POSIXMessageQueue POSIXMessageQueue::create_raw(
     const std::string& path, 
     int oflag, 
     mode_t mode, 
@@ -30,7 +30,7 @@ POSIXMessageQueue POSIXMessageQueue::create(
     return ret;
 }
 
-POSIXMessageQueue POSIXMessageQueue::open(
+POSIXMessageQueue POSIXMessageQueue::open_raw(
     const std::string& path, 
     int oflag)
 {

@@ -4,6 +4,7 @@ executable(
     ['_timer.h'],
     include_directories: common_includedir,
     link_with: [jf_lib],
+    install: true,
 )
 
 executable(
@@ -13,4 +14,5 @@ executable(
     include_directories: common_includedir,
     link_with: [jf_lib],
     dependencies: [thread_dep],
+    install: true,
 )

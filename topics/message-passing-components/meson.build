@@ -3,6 +3,7 @@ executable(
     ['component-A.cc'],
     include_directories: common_includedir,
     link_with: [jf_lib],
+    install: true,
 )
 
 executable(
@@ -10,6 +11,7 @@ executable(
     ['component-B.cc'],
     include_directories: common_includedir,
     link_with: [jf_lib],
+    install: true,
 )
 
 executable(
@@ -17,6 +19,7 @@ executable(
     ['component-A-client.cc'],
     include_directories: common_includedir,
     link_with: [jf_lib],
+    install: true,
 )
 
 executable(
@@ -24,4 +27,13 @@ executable(
     ['setup-components.cc'],
     include_directories: common_includedir,
     link_with: [jf_lib],
+    install: true,
+)
+
+executable(
+    'jf-teardown-components',
+    ['teardown-components.cc'],
+    include_directories: common_includedir,
+    link_with: [jf_lib],
+    install: true,
 )

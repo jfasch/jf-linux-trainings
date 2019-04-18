@@ -6,10 +6,10 @@
 int main()
 {
     jf::POSIXMessageQueue::create(
-        "/ComponentA", O_RDWR, 0600, 
+        queue_name_A, O_RDWR|O_EXCL, 0600, 
         jf::POSIXMessageQueue::Attr().set_maxmsg(5).set_msgsize(sizeof(message_A)));
     jf::POSIXMessageQueue::create(
-        "/ComponentB", O_RDWR, 0600, 
+        queue_name_B, O_RDWR|O_EXCL, 0600, 
         jf::POSIXMessageQueue::Attr().set_maxmsg(5).set_msgsize(sizeof(message_B)));
     return 0;
 }

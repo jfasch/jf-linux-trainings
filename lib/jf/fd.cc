@@ -25,12 +25,19 @@ FD::FD(FD&& fd)
 FD& FD::operator=(FD&& fd)
 {
     if (&fd == this)
-        treturn *this;
+        return *this;
     if (fd_ != -1)
         ::close(fd_);
     fd_ = fd.fd_;
     fd.fd_ = -1;
     return *this;
+}
+
+void FD::own(int fd)
+{
+    if (fd_ != -1)
+        ::close(fd_);
+    fd_ = fd;
 }
 
 ssize_t FD::read(void* buf, size_t count)

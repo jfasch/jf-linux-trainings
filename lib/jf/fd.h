@@ -16,6 +16,8 @@ public:
     FD(FD&&);
     FD& operator=(FD&&);
 
+    void own(int fd);
+
     int fd() const { return fd_; }
     operator int() const { return fd_; }
 

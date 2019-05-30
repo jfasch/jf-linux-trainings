@@ -1,6 +1,8 @@
 jf_lib = library(
     'jf',
     [
+        'system-error.h',
+        'system-error.cc',
         'fd.h',
         'fd.cc',
         'socketpair.h',
@@ -23,6 +25,10 @@ jf_lib = library(
 	'work-queue.cc',
         'posix-message-queue.h',
 	'posix-message-queue.cc',
+        'ip4.h',
+        'ip4.cc',
+	'tcp4.h',
+	'tcp4.cc',
     ],
     install: true,
     dependencies: [thread_dep, librt],

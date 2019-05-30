@@ -7,10 +7,11 @@ testbin = executable(
      'work-queue-suite.cc',
      'posix-message-queue-suite.cc',
      'graceful-eventloop-termination-suite.cc',
+     'tcp4-suite.cc',
     ],
     include_directories: common_includedir,
     link_with: [jf_lib],
-    dependencies: boost_test,
+    dependencies: [boost_test, thread_dep]
 )
 
 test('test', testbin)

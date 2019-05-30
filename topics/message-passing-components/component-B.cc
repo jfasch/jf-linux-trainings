@@ -39,6 +39,7 @@ int main()
         // run
         while (! graceful_termination.requested())
             loop.run_one();
+        std::cerr << "Shutdown ..." << std::endl;
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;

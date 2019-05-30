@@ -13,17 +13,8 @@ public:
     explicit FD(int fd);
     ~FD();
 
-    FD(FD&& fd)
-    : fd_(fd.fd_)
-    {
-        fd.fd_ = -1;
-    }
-    FD& operator=(FD&& fd)
-    { 
-        fd_ = fd.fd_;
-        fd.fd_ = -1;
-        return *this;
-    }
+    FD(FD&&);
+    FD& operator=(FD&&);
 
     int fd() const { return fd_; }
     operator int() const { return fd_; }

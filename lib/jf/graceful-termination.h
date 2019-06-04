@@ -14,7 +14,7 @@ class GracefulTermination
 public:
     GracefulTermination(const std::vector<int>& signals);
 
-    const FD& fd() { return signalfd_.fd(); }
+    int fd() { return signalfd_.fd(); }
     void set_requested() { requested_ = true; }
     bool requested() const { return requested_; }
 

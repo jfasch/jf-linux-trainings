@@ -9,16 +9,11 @@
 
 namespace jf {
 
-class SignalFD
+class SignalFD : public FD
 {
 public:
     SignalFD(const sigset_t&);
     void wait(signalfd_siginfo&);
-
-    const FD& fd() { return fd_; }
-
-private:
-    FD fd_;
 };
     
 }

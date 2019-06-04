@@ -21,8 +21,8 @@ public:
     int fd() const { return fd_; }
     operator int() const { return fd_; }
 
-    ssize_t read(void* buf, size_t count);
-    ssize_t write(const void *buf, size_t count);
+    size_t read(void* buf, size_t count);
+    size_t write(const void *buf, size_t count);
     void close();
 
     void set_nonblocking();

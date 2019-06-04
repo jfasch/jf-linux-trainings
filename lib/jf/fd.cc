@@ -44,16 +44,22 @@ void FD::own(int fd)
     fd_ = fd;
 }
 
-ssize_t FD::read(void* buf, size_t count)
+size_t FD::read(void* buf, size_t count)
 {
     assert(fd_>=0);
-    return ::read(fd_, buf, count);
+    ssize_t nread = ::read(fd_, buf, count);
+    if (nread == -1)
+        throw SystemError(errno);
+    return nread;
 }
 
-ssize_t FD::write(const void *buf, size_t count)
+size_t FD::write(const void *buf, size_t count)
 {
     assert(fd_>=0);
-    return ::write(fd_, buf, count);
+    ssize_t nwritten = ::write(fd_, buf, count);
+    if (nwritten == -1)
+        throw SystemError(errno);
+    return nwritten;
 }
 
 void FD::close()

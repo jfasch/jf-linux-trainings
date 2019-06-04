@@ -4,6 +4,7 @@
 #include "fd.h"
 #include "timespec.h"
 
+#include <stdint.h>
 #include <time.h>
 
 
@@ -16,15 +17,17 @@ namespace jf {
 class PeriodicTimerFD : public FD
 {
 public:
-    PeriodicTimerFD(TimeSpec interval);
-    PeriodicTimerFD(TimeSpec initial, TimeSpec interval);
+    PeriodicTimerFD(timespec interval);
+    PeriodicTimerFD(timespec initial, timespec interval);
+
+    uint64_t reap_expirations();
 
     void start();
     void stop();
 
 private:
-    TimeSpec _initial;
-    TimeSpec _interval;
+    timespec _initial;
+    timespec _interval;
 };
 
 }

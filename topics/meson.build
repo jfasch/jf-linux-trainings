@@ -1,4 +1,5 @@
 subdir('context-switch-profiling')
 subdir('work-queue')
+subdir('eventloop')
 subdir('message-passing-components')
 subdir('shared-memory')

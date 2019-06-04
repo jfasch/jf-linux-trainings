@@ -21,6 +21,8 @@ jf_lib = library(
         'timerfd.cc',
         'signalfd.h',
         'signalfd.cc',
+        'eventfd.h',
+        'eventfd.cc',
 	'work-queue.h',
 	'work-queue.cc',
         'posix-message-queue.h',

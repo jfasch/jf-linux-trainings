@@ -18,7 +18,7 @@ int main()
         loop.watch_in(graceful_termination.fd(),
                       [&graceful_termination](int,jf::EventLoop*)
                       {
-                          graceful_termination.make_request();
+                          graceful_termination.set_requested();
                       });
 
         // add message queue to loop

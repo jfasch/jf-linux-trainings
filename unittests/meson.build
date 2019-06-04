@@ -8,6 +8,7 @@ testbin = executable(
      'posix-message-queue-suite.cc',
      'graceful-eventloop-termination-suite.cc',
      'tcp4-suite.cc',
+     'shared-event-queue-suite.cc',
     ],
     include_directories: common_includedir,
     link_with: [jf_lib],

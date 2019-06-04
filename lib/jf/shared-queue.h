@@ -11,10 +11,18 @@ namespace jf {
 
 template<typename T> class SharedQueue {
 public:
+    class WouldBlock : public std::exception 
+    {
+    public:
+        virtual const char* what() const noexcept { return "nothing there"; }
+    };
+
+public:
     SharedQueue(size_t maxelem = std::numeric_limits<size_t>::max());
 
     void push(const T&);
     T pop();
+    T pop_nowait();
 
 private:
     size_t maxelem_;
@@ -45,6 +53,20 @@ template<typename T> T SharedQueue<T>::pop()
         std::unique_lock<std::mutex> guard(lock_);
         while (queue_.size() == 0)
             notempty_.wait(guard);
+        elem = queue_.front();
+        queue_.pop();
+    }
+    notfull_.notify_one();
+    return elem;
+}
+
+template<typename T> T SharedQueue<T>::pop_nowait()
+{
+    T elem;
+    {
+        std::unique_lock<std::mutex> guard(lock_);
+        if (queue_.size() == 0)
+            throw WouldBlock();
         elem = queue_.front();
         queue_.pop();
     }

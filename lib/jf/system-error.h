@@ -3,6 +3,7 @@
 
 #include "system-error.h"
 
+#include <errno.h>
 #include <string>
 
 

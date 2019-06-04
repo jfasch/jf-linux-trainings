@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(basic)
 
         jf::EventLoop_epoll loop;
         jf::GracefulTermination termination({SIGTERM});
-        loop.watch_in(termination.fd(), [&termination](int, jf::EventLoop*){termination.make_request();});
+        loop.watch_in(termination.fd(), [&termination](int, jf::EventLoop*){termination.set_requested();});
 
         // now being prepared for graceful; send handshake to my test.
         const char handshake_byte = 'h';

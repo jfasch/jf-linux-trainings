@@ -48,6 +48,19 @@ BOOST_AUTO_TEST_CASE(implicit_wildcard_address)
     BOOST_REQUIRE_EQUAL(one_byte, '8');
 
     echo_server.join();
+
+}
+
+BOOST_AUTO_TEST_CASE(reuse_addr)
+{
+    // grab free port number
+    auto port = grab_available();
+    // close and reopen that same port a number of times in a row.
+    auto port_number = port->port_number();
+    port = nullptr;
+    for (int i=0; i<10; i++) {
+        jf::TCP4Port newport(port_number);
+    }
 }
 
 BOOST_AUTO_TEST_CASE(todo)

@@ -25,6 +25,8 @@ public:
     ssize_t write(const void *buf, size_t count);
     void close();
 
+    void set_nonblocking();
+
 private:
     int fd_;
 };

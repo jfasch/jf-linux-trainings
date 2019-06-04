@@ -1,6 +1,10 @@
 #include "fd.h"
 
+#include "system-error.h"
+
 #include <cassert>
+#include <unistd.h>
+#include <fcntl.h>
 
 
 namespace jf {
@@ -57,6 +61,20 @@ void FD::close()
     assert(fd_>=0);
     ::close(fd_);
     fd_ = -1;
+}
+
+void FD::set_nonblocking()
+{
+    int flags = ::fcntl(fd_, F_GETFL, 0);
+    if (flags == -1)
+        throw SystemError(errno);
+
+    if (flags & O_NONBLOCK)
+        return;
+
+    int error = ::fcntl(fd_, F_SETFL, flags | O_NONBLOCK);
+    if (error)
+        throw SystemError(errno);
 }
 
 }

@@ -35,23 +35,32 @@ static void _stop_fd(int fd)
 // -----------------------------------------------------------
 // PeriodicTimerFD implementation
 PeriodicTimerFD::PeriodicTimerFD(
-    TimeSpec interval)
+    timespec interval)
 : FD(_create_fd()),
   _initial(interval),
   _interval(interval)
 {
-    assert(! interval.is_zero());
+    assert(! is_zero(interval));
 }
 
 PeriodicTimerFD::PeriodicTimerFD(
-    TimeSpec initial,
-    TimeSpec interval)
+    timespec initial,
+    timespec interval)
 : FD(_create_fd()),
   _initial(initial),
   _interval(interval)
 {
-    assert(! _initial.is_zero());
-    assert(! _interval.is_zero());
+    assert(! is_zero(_initial));
+    assert(! is_zero(_interval));
+}
+
+uint64_t PeriodicTimerFD::reap_expirations()
+{
+    uint64_t n_expirations = 0; // valgrind cannot look into the
+                                // kernel, so kindly initialize it.
+    ssize_t nread = this->read(&n_expirations, sizeof(n_expirations));
+    assert(nread == sizeof(n_expirations));
+    return n_expirations;
 }
 
 void PeriodicTimerFD::start()

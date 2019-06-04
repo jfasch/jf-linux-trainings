@@ -9,6 +9,15 @@
 
 namespace jf {
 
+/// Producer/consumer queue - communicate between two or more threads
+
+/** The methods push() and pop() properly protect the underlying data
+    structure against multithreaded access.
+
+    Additionally, wait conditions (wanting to pop when the queue is
+    empty, or wanting to push when the queue is full) are implemented
+    using condition variables.
+ */
 template<typename T> class SharedQueue {
 public:
     class WouldBlock : public std::exception 

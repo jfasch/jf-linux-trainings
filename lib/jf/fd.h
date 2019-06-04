@@ -6,6 +6,14 @@
 
 namespace jf {
 
+/// Encapsulation of a file descriptor
+
+/** Owns a file descriptor, and provides move semantics for proper
+    ownership transfer (only one must close() the file descriptor).
+
+    Provides convenience methods read(), write(), close() that many
+    file descriptors support.
+ */
 class FD
 {
 public:

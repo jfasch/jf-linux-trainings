@@ -7,6 +7,14 @@
 
 namespace jf {
 
+/// Producer/consumer queue, with file descriptor event notification
+/// support
+
+/** Works like SharedQueue<>, except that the consumer end provides a
+    file descriptor for event notification. Register the file
+    descriptor in an EventLoop, together with a callback, and you can
+    use the queue in an event driven application.
+ */
 template<typename T> class SharedEventQueue {
 public:
     SharedEventQueue(size_t maxelem = std::numeric_limits<size_t>::max());

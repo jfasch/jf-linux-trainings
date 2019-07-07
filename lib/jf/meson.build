@@ -31,6 +31,8 @@ jf_lib = library(
         'ip4.cc',
 	'tcp4.h',
 	'tcp4.cc',
+	'can.h',
+	'can.cc',
     ],
     install: true,
     dependencies: [thread_dep, librt],

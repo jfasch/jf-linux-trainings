@@ -1,6 +1,6 @@
 #include "graceful-termination.h"
 
-#include "exception.h"
+#include "system-error.h"
 
 #include <cassert>
 #include <cerrno>
@@ -20,7 +20,7 @@ static SignalFD _setup(
     // using the default actions (most likely, terminating the
     // process)
     if (sigprocmask(SIG_BLOCK, &set, NULL) == -1)
-        throw ErrnoException(errno, "sigprocmask, setting up graceful termination");
+        throw SystemError(errno, "sigprocmask, setting up graceful termination");
 
     return SignalFD(set);
 }

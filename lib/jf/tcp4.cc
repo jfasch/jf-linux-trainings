@@ -19,7 +19,7 @@ TCP4Connection::TCP4Connection(
 
     int sock = ::socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "socket(AF_INET, SOCK_STREAM, 0)");
 
     this->own(sock);
 
@@ -31,7 +31,7 @@ TCP4Connection::TCP4Connection(
 
     int error = ::connect(*this, (const struct sockaddr*)&server_addr, sizeof(server_addr));
     if (error)
-        throw SystemError(errno);
+        throw SystemError(errno, "connect()");
 }
 
 // --------------------------------------------------------------------
@@ -40,7 +40,7 @@ TCP4Port::TCP4Port(uint16_t port_number)
 {
     port_fd_ = FD(::socket(AF_INET, SOCK_STREAM, 0));
     if (port_fd_ == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "socket(AF_INET, SOCK_STREAM, 0)");
 
     sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
@@ -51,21 +51,21 @@ TCP4Port::TCP4Port(uint16_t port_number)
     int error = ::bind(port_fd_, (const struct sockaddr*)&addr, sizeof(addr));
     if (error) {
         if (errno == EADDRINUSE)
-            throw EAddrInUse(errno);
+            throw EAddrInUse("bind()");
         else
-            throw SystemError(errno);
+            throw SystemError(errno, "bind()");
     }
 
     error = ::listen(port_fd_, SOMAXCONN);
     if (error)
-        throw SystemError(errno);
+        throw SystemError(errno, "listen()");
 }
 
 TCP4Connection TCP4Port::accept()
 {
     int connection = ::accept(port_fd_, nullptr, nullptr);
     if (connection == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "accept()");
     return TCP4Connection(connection);
 }
 

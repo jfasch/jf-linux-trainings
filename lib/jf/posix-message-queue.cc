@@ -1,6 +1,6 @@
 #include "posix-message-queue.h"
 
-#include "exception.h"
+#include "system-error.h"
 
 #include <cstring>
 #include <cassert>
@@ -23,7 +23,7 @@ POSIXMessageQueue POSIXMessageQueue::create_raw(
 
     mqd_t mq = mq_open(path.c_str(), oflag, mode, &attr);
     if (mq < 0)
-        throw ErrnoException(errno, "mq_open(O_CREAT)");
+        throw SystemError(errno, "mq_open(O_CREAT)");
 
     POSIXMessageQueue ret;
     ret.fd_ = FD(mq);
@@ -38,7 +38,7 @@ POSIXMessageQueue POSIXMessageQueue::open_raw(
     
     mqd_t mq = mq_open(path.c_str(), oflag);
     if (mq < 0)
-        throw ErrnoException(errno, "mq_open()");
+        throw SystemError(errno, "mq_open()");
 
     POSIXMessageQueue ret;
     ret.fd_ = FD(mq);
@@ -49,7 +49,7 @@ void POSIXMessageQueue::unlink(
     const std::string& path)
 {
     if (mq_unlink(path.c_str()) < 0)
-        throw ErrnoException(errno, "mq_unlink()");
+        throw SystemError(errno, "mq_unlink()");
 }
 
 void POSIXMessageQueue::send_raw(
@@ -58,7 +58,7 @@ void POSIXMessageQueue::send_raw(
     unsigned priority)
 {
     if (mq_send(fd_, (const char*)msg, msg_len, priority) < 0)
-        throw ErrnoException(errno, "mq_send()");
+        throw SystemError(errno, "mq_send()");
 }
 
 size_t POSIXMessageQueue::receive_raw(
@@ -68,7 +68,7 @@ size_t POSIXMessageQueue::receive_raw(
     unsigned prio;
     ssize_t nread = mq_receive(fd_, (char*)msg, msg_len, &prio);
     if (nread < 0)
-        throw ErrnoException(errno, "mq_receive()");
+        throw SystemError(errno, "mq_receive()");
     return nread;
 }
 

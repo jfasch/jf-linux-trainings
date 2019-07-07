@@ -25,7 +25,7 @@ IP4Address::IP4Address(
     if (retval == 0) // not a valid ipv4 address
         throw BadAddress(s);
     if (retval == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "inet_pton()");
 }
 
 }

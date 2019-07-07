@@ -23,7 +23,7 @@ public:
     class EAddrInUse : public SystemError 
     {
     public:
-        EAddrInUse(int errnum) : SystemError(errnum) {}
+        EAddrInUse(const std::string& message) : SystemError(EADDRINUSE, message) {}
     };
 
 public:

@@ -1,6 +1,6 @@
 #include "pipe.h"
 
-#include "exception.h"
+#include "system-error.h"
 
 #include <unistd.h>
 #include <errno.h>
@@ -13,7 +13,7 @@ Pipe::Pipe()
     int ends[2];
     int ret = ::pipe(ends);
     if (ret == -1)
-        throw ErrnoException(errno, "pipe()");
+        throw SystemError(errno, "pipe()");
 
     reader_ = FD(ends[0]);
     writer_ = FD(ends[1]);

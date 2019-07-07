@@ -7,11 +7,17 @@
 
 namespace jf {
 
-SystemError::SystemError(int errnum)
-: errnum_(errnum)
+SystemError::SystemError(
+    int errnum, 
+    const std::string& message)
+: errnum_(errnum),
+  errstr_(message)
 {
-    char buffer[128];
-    errstr_ = ::strerror_r(errnum, buffer, sizeof(buffer));
+    errstr_ += ": ";
+    char buf[64];
+    errstr_ += ::strerror_r(errnum_, buf, sizeof(buf));
+    ::sprintf(buf, " (%d)", errnum_);
+    errstr_ += buf;
 }
 
 }

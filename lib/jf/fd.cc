@@ -49,7 +49,7 @@ size_t FD::read(void* buf, size_t count)
     assert(fd_>=0);
     ssize_t nread = ::read(fd_, buf, count);
     if (nread == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "read()");
     return nread;
 }
 
@@ -58,7 +58,7 @@ size_t FD::write(const void *buf, size_t count)
     assert(fd_>=0);
     ssize_t nwritten = ::write(fd_, buf, count);
     if (nwritten == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "write()");
     return nwritten;
 }
 
@@ -73,14 +73,14 @@ void FD::set_nonblocking()
 {
     int flags = ::fcntl(fd_, F_GETFL, 0);
     if (flags == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "fcntl(F_GETFL)");
 
     if (flags & O_NONBLOCK)
         return;
 
     int error = ::fcntl(fd_, F_SETFL, flags | O_NONBLOCK);
     if (error)
-        throw SystemError(errno);
+        throw SystemError(errno, "fcntl(F_SETFL)");
 }
 
 }

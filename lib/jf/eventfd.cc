@@ -13,7 +13,7 @@ EventFD::EventFD(
 : FD(::eventfd(initval, flags))
 {
     if (this->fd() == -1)
-        throw SystemError(errno);
+        throw SystemError(errno, "eventfd()");
 }
 
 void EventFD::produce(uint64_t howmany)

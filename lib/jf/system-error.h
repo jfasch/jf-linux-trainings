@@ -12,7 +12,8 @@ namespace jf {
 class SystemError : public std::exception
 {
 public:
-    SystemError(int errnum /*a.k.a. errno*/);
+    SystemError(int errnum /*a.k.a. errno*/, const std::string& message);
+    int errnum() const { return errnum_; }
     virtual const char* what() const noexcept { return errstr_.c_str(); }
 private:
     int errnum_;

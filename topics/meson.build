@@ -1,5 +1,6 @@
 subdir('context-switch-profiling')
 subdir('work-queue')
+subdir('tcp')
 subdir('can')
 subdir('eventloop')
 subdir('message-passing-components')

@@ -4,6 +4,7 @@
 
 #include <string.h>
 #include <errno.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/ip.h>
 
@@ -35,12 +36,20 @@ TCP4Connection::TCP4Connection(
 }
 
 // --------------------------------------------------------------------
-TCP4Port::TCP4Port(uint16_t port_number)
+TCP4Port::TCP4Port(
+    uint16_t port_number,
+    bool reuse_address)
 : port_number_(port_number)
 {
     port_fd_ = FD(::socket(AF_INET, SOCK_STREAM, 0));
     if (port_fd_ == -1)
         throw SystemError(errno, "socket(AF_INET, SOCK_STREAM, 0)");
+
+    if (reuse_address) {
+        int enable = 1;
+        if (setsockopt(port_fd_, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int)) < 0)
+            throw SystemError(errno, "setsockopt(SO_REUSEADDR)");
+    }
 
     sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));

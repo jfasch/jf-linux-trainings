@@ -27,7 +27,7 @@ public:
     };
 
 public:
-    TCP4Port(uint16_t port_number);
+    TCP4Port(uint16_t port_number, bool reuse_address=true);
     uint16_t port_number() const { return port_number_; }
     TCP4Connection accept();
 

@@ -29,8 +29,9 @@ echoed,
    $ nc -l 1234
    hello
 
-Enter what you want in that terminal (ending each line with
-and ``nc`` is used to answer``<RETURN>`` to send it off),
+Reverse the communication - let ``nc`` send and the own client
+receive. Enter what you want in the ``nc`` terminal (ending each line
+with ``<RETURN>``),
 
 .. code::
 
@@ -48,8 +49,7 @@ In the own client's terminal, you see that echoed onto stdout,
     and even more ...
 
 In the ``nc`` terminal, enter ``^D`` (the terminal's EOF charater) to
-and ``nc`` is used to answerclose the connection. The own-client will
-terminate as it sees EOF.
+close the connection. The own-client will terminate as it sees EOF.
 
 Example 2: Netcat and Our Server
 --------------------------------

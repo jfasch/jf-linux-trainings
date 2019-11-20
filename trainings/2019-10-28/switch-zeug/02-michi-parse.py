@@ -2,7 +2,6 @@
 
 from michi import parse_switch
 
-
 switch = parse_switch(name='hansi',
                       adminstatus_fname = 'data/ifAdminStatus.txt',
                       descr_fname = 'data/ifDescr.txt',
@@ -10,6 +9,5 @@ switch = parse_switch(name='hansi',
                       operstatus_fname = 'data/ifOperStatus.txt',
                       snmpenginetime_fname = 'data/snmpEngineTime.txt',
 )
-
 
 print(switch)

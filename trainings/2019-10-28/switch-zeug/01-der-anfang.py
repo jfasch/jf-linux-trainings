@@ -26,4 +26,4 @@ alle_switches = [
 ]
 
 for sw in alle_switches:
-    print('name:', sw.name, ', interfaces:', [str(i) for i in sw.interfaces])
+    print(sw)

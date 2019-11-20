@@ -1,26 +1,12 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
+from switch import Switch
+from interface import Interface
+
 import datetime
 
 
-class Switch:
-    def __init__(self, name, interfaces, uptime):
-        assert isinstance(uptime, datetime.timedelta)
-
-        self.name = name
-        self.interfaces = interfaces
-        self.uptime = uptime
-
-class Interface:
-    UP, DOWN = (1,2)
-
-    def __init__(self, name, number, adminstatus, operstatus, last_change):
-        self.name = name
-        self.number = number
-        self.adminstatus = adminstatus
-        self.operstatus = operstatus
-        self.last_change = last_change
 
 meine_interfaces = [
     Interface(name='if1', number=1, adminstatus=Interface.UP, operstatus=Interface.DOWN, 
@@ -40,4 +26,4 @@ alle_switches = [
 ]
 
 for sw in alle_switches:
-    print('name:', sw.name, ', interfaces:', sw.interfaces)
+    print('name:', sw.name, ', interfaces:', [str(i) for i in sw.interfaces])

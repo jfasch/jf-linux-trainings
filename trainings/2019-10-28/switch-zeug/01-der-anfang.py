@@ -1,12 +1,9 @@
 #!/usr/bin/python
 
 class Switch:
-    'hier geschieht ein wunder'
-
     def __init__(self, name, interfaces):
-        'hier geschieht das erste wunder'
-        
-
+        self.name = name
+        self.interfaces = interfaces
 
 meine_interfaces = [
     
@@ -23,4 +20,4 @@ alle_switches = [
 ]
 
 for sw in alle_switches:
-    print(sw.name)
+    print('name:', sw.name, ', interfaces:', sw.interfaces)

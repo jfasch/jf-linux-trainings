@@ -16,3 +16,4 @@ except MichisError as e:
     print('hmm. suboptimal. im switchzeug is was faul, der michi wars: ', e)
 except SwitchZeugError as e:
     print('hmm. suboptimal. im switchzeug is was faul: ', e)
+# all other exceptions pass unhandled

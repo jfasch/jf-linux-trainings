@@ -1,8 +1,6 @@
 Todo
 ----
 
-* Exceptions: raise RuntimeError, catch in toplevel
-* -> define own parser exception? package-wide?
 * transform clumsy for loop into comprehension
 * argparse: 
 

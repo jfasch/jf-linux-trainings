@@ -27,17 +27,12 @@ def parse_switch(name,
 
     # build the interface objects, hard-indexing all those
     # dictionaries
-    ifaces = []
-    for ifnum in iface_numbers:
-        admin_status = admin_stati[ifnum]
-        descr = descrs[ifnum]
-        last_change = last_changes[ifnum]
-        oper_status = oper_stati[ifnum]
-        iface = Interface(name=descr, number=ifnum, 
-                          adminstatus=admin_status, operstatus=oper_status, 
-                          last_change=last_change)
-
-        ifaces.append(iface)
+    ifaces = [Interface(number=ifnum, 
+                        name=descrs[ifnum], 
+                        adminstatus=admin_stati[ifnum], 
+                        operstatus=oper_stati[ifnum], 
+                        last_change=last_changes[ifnum])
+              for ifnum in iface_numbers]
 
     return Switch(name, interfaces=ifaces, uptime=uptime)
 

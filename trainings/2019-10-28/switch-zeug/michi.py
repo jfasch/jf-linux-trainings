@@ -44,10 +44,12 @@ def parse_switch(name,
 def parse_status(fname):
     iface_stati = {} # {number: Interface.status}
     with open(fname) as f:
-        for line in f:
+        for lineno, line in enumerate(f, start=1):
             path, eq, ty, stat = line.split()
-            assert eq == '='
-            assert ty == 'INTEGER:'
+            if eq != '=':
+                raise RuntimeError('"=" required in line {} of {}'.format(lineno, fname))
+            if ty != 'INTEGER:':
+                raise RuntimeError('"INTEGER:" required in line {} of {}'.format(lineno, fname))
             _, num = path.rsplit('.', maxsplit=1)
             iface_stati[num] = int(stat)
     return iface_stati
@@ -64,9 +66,11 @@ def parse_descr(fname):
 def parse_lastchange(fname):
     iface_lastchanges = {} # {number: timedelta(lastchange)}
     with open(fname) as f:
-        for line in f:
-            match = re.search(r'^.*\.(\d+)\s*=\s*Timeticks:\s*\((\d+)\)', line)
-            assert match is not None
+        for lineno, line in enumerate(f, start=1):
+            re_str = r'^.*\.(\d+)\s*=\s*Timeticks:\s*\((\d+)\)'
+            match = re.search(re_str, line)
+            if match is None:
+                raise RuntimeError('{} nix match in line {} of {}'.format(re_str, lineno, fname))
             ifnum = match.group(1)
             time_100th_s = match.group(2)
             iface_lastchanges[ifnum] = datetime.timedelta(seconds=int(time_100th_s)/100)

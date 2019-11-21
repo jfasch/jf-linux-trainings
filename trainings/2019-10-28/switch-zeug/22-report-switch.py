@@ -9,7 +9,7 @@ import sqlite3 as db
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--name', help='switch name blah blah')
+parser.add_argument('--name', help='switch name blah blah', required=True)
 parser.add_argument('db', help='sqlite3 database file')
 
 args = parser.parse_args()

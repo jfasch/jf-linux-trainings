@@ -9,7 +9,6 @@ with open(switchimages) as f:
     fw_defs = {}
     exec(f.read(), fw_defs)
 
-
 print('sw_2960', fw_defs['sw_2960'])
 print('sw_2960s', fw_defs['sw_2960s'])
 print('sw_2960x', fw_defs['sw_2960x'])

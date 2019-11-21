@@ -1,5 +1,6 @@
 from switch import Switch
 from interface import Interface 
+from error import MichisError
 
 import datetime
 import re
@@ -47,9 +48,9 @@ def parse_status(fname):
         for lineno, line in enumerate(f, start=1):
             path, eq, ty, stat = line.split()
             if eq != '=':
-                raise RuntimeError('"=" required in line {} of {}'.format(lineno, fname))
+                raise MichisError('"=" required in line {} of {}'.format(lineno, fname))
             if ty != 'INTEGER:':
-                raise RuntimeError('"INTEGER:" required in line {} of {}'.format(lineno, fname))
+                raise MichisError('"INTEGER:" required in line {} of {}'.format(lineno, fname))
             _, num = path.rsplit('.', maxsplit=1)
             iface_stati[num] = int(stat)
     return iface_stati
@@ -70,7 +71,7 @@ def parse_lastchange(fname):
             re_str = r'^.*\.(\d+)\s*=\s*Timeticks:\s*\((\d+)\)'
             match = re.search(re_str, line)
             if match is None:
-                raise RuntimeError('{} nix match in line {} of {}'.format(re_str, lineno, fname))
+                raise MichisError('{} nix match in line {} of {}'.format(re_str, lineno, fname))
             ifnum = match.group(1)
             time_100th_s = match.group(2)
             iface_lastchanges[ifnum] = datetime.timedelta(seconds=int(time_100th_s)/100)

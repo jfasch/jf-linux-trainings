@@ -1,17 +1,18 @@
 #!/usr/bin/python
 
-from switch import Switch
-from interface import Interface
+from SwitchZeug.switch import Switch
+from SwitchZeug.interface import Interface
 
 import argparse
 import datetime
 import sqlite3 as db
 
 
-parser = argparse.ArgumentParser()
+# parse commandline
+parser = argparse.ArgumentParser(
+    description="Create report out of given switch database")
 parser.add_argument('--name', help='switch name blah blah', required=True)
 parser.add_argument('db', help='sqlite3 database file')
-
 args = parser.parse_args()
 
 connection = db.connect(args.db)

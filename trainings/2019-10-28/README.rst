@@ -1,3 +1,5 @@
+.. contents:: Table of Contents
+
 Exercises
 =========
 
@@ -67,3 +69,22 @@ Miscellaneous
 
   `Misc/scope-closure.py <Misc/scope-closure.py>`__
 
+Project
+=======
+
+We had two days left, in addition to the usual three days which are
+sufficient to learn the basics. A group project was launched, with the
+somewhat real-life topic "talking to switches and doing all kinds of
+stuff with that information".
+
+This gave us the opportunity to discover a couple of areas more
+closely.
+
+* Object oriented programming (a switch has interfaces, and both have
+  properties)
+* Storing all that in databases
+* Exception handling
+* Commandline interfaces
+* Unit testing
+
+See `SwitchZeug/README.rst <SwitchZeug/README.rst>`__

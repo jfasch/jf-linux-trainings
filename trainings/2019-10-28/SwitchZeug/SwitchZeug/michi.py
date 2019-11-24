@@ -1,6 +1,6 @@
-from switch import Switch
-from interface import Interface 
-from error import MichisError
+from .switch import Switch
+from .interface import Interface 
+from .error import MichisError
 
 import datetime
 import re

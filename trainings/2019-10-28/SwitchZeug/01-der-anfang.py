@@ -1,11 +1,9 @@
 #!/usr/bin/python
-# -*- encoding: utf-8 -*-
 
-from switch import Switch
-from interface import Interface
+from SwitchZeug.switch import Switch
+from SwitchZeug.interface import Interface
 
 import datetime
-
 
 
 meine_interfaces = [
@@ -14,7 +12,6 @@ meine_interfaces = [
     Interface(name='if2', number=2, adminstatus=Interface.UP, operstatus=Interface.DOWN, 
               last_change=datetime.datetime(year=2019, month=11, day=20, hour=13, minute=17, second=33)),
 ]
-
 mein_switch = Switch('sw01', interfaces=meine_interfaces, uptime=datetime.timedelta(seconds=1))
 
 alle_switches = [

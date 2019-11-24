@@ -1,12 +1,18 @@
 #!/usr/bin/python
 
 import sqlite3 as db
+import argparse
 
 
-filename = '/tmp/switch-zeug.sqlite3'
-connection = db.connect(filename)
+# parse commandline
+parser = argparse.ArgumentParser(
+    description="Create database schema in the given switch database")
+parser.add_argument('db', help='sqlite3 database file')
+args = parser.parse_args()
+dbfile = args.db
+
+connection = db.connect(dbfile)
 cursor = connection.cursor()
-
 
 cursor.execute('''
 CREATE TABLE switches (

@@ -1,4 +1,4 @@
-from error import InterfaceNameNotUnique
+from .error import InterfaceNameNotUnique
 
 import datetime
 

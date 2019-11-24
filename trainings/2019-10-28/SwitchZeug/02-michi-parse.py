@@ -1,17 +1,7 @@
 #!/usr/bin/python
 
-from michi import parse_switch
-from error import SwitchZeugError, MichisError
-
-# import argparse
-
-# parser = argparse.ArgumentParser()
-# parser.add_argument('adminstatus', help='admin status file blah')
-# parser.add_argument('descr', help='descr file blah')
-# parser.add_argument('lastchange', help='last change file blah')
-# parser.add_argument('operstatus', help='oper status file blah')
-# parser.add_argument('snmpenginetime', help='SNMP engine file blah')
-
+from SwitchZeug.michi import parse_switch
+from SwitchZeug.error import SwitchZeugError, MichisError
 
 
 try:

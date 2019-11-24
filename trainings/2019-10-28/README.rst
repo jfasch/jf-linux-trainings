@@ -87,4 +87,4 @@ closely.
 * Commandline interfaces
 * Unit testing
 
-See `SwitchZeug/README.rst <SwitchZeug/README.rst>`__
+See `SwitchZeug/ <SwitchZeug/>`__

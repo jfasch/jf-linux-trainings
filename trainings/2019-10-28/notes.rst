@@ -1,11 +1,22 @@
 Todo
 ----
 
-* sqlite3
-* unittests: tempfile.NamedTemporaryFile, tempfile.TemporaryFile
-* argparse: 
+* toplevel README
 
-  * files as params (michi)
-  * argparse for help string
-  * -> keywords args
+* Python-Code
 
+  * rename -> Exercises
+  * comment
+  * move michi config examples into switch-zeug
+
+* switch-zeug
+
+  * comment
+  * push down modules into package switchzeug/
+  * executables into bin/
+  * unittests into tests/
+  * README
+
+    * PYTHONPATH
+
+  * setup.py?

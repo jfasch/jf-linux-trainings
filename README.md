@@ -1,8 +1,14 @@
 # Jörg Faschingbauer's Linux Trainings: Supporting Code
 
+## Trainings, Supporting Material
+
+The [``trainings``](trainings/) subdirectory contains support material
+created per training.
+
 ## Building and Installing
 
-The project is built with [Meson](https://mesonbuild.com/). Meson uses
+The project's C/C++ is built with
+[Meson](https://mesonbuild.com/). Meson uses
 [Ninja](https://ninja-build.org/) by default, so make sure you have
 both installed. Then,
 

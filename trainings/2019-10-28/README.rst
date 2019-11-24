@@ -8,7 +8,7 @@ Exercises
   Write a program that takes a single digit as commandline parameter.
   Print the English word for that digit.
 
-  `Exercises/digit.py <Exercises/digit.py>`
+  `Exercises/digit.py <Exercises/digit.py>`__
 
 * **Slide 58, "Exercises: While Loop"**
 

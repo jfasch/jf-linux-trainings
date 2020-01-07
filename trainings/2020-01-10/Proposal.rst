@@ -1,3 +1,10 @@
+This is a proposal (sorry not a formal agenda) for a one-day training,
+covering the following topics.
+
+* IPC (the most part)
+* Code review of **BEEEEEEP**
+* Optional: advanced topics
+
 .. contents:: Table of Contents
 
 IPC in Linux

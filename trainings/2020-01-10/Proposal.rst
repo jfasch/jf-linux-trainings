@@ -56,10 +56,16 @@ mechanisms, simply because "IPC" predates sockets by over a decade.
 Unix domain sockets are just one transport among the other ones
 supported by the socket API (the most popular being TCP/IP).
 
+Application in your Company
+===========================
+
+Lets reserve some time to make a collaborative code review of
+**BEEEEEEP**.
+
 Further Thoughts
 ================
 
-If there's time (I doubt it because one Friday is optimistic enough to
+If there's time (I doubt it because one day is already tight enough to
 cover IPC), we can also talk about more advanced topics. Sockets are
 represented in Unix as *file descriptors*, just like regular files and
 many other communication mechanisms, so it makes sense to at least

@@ -69,6 +69,9 @@ Signals
 Virtual Memory, POSIX Shared Memory
 ===================================
 
+Virtual Memory Basics
+---------------------
+
 * `mmap` to read `/etc/passwd` (`shm/010-mmap.cc`)
 
   * give explanation of mappings
@@ -76,13 +79,26 @@ Virtual Memory, POSIX Shared Memory
   * strace to see how address space is prepared
   * file mappings vs. anonymous
 
+Shared Memory
+-------------
+
 * shm_open/O_CREAT -> open (`shm/020-shm-create.cc`)
 
-  * only shm_open -> /dev/shm/* -> zero size
+  * only shm_open
+
+    * /dev/shm/*
+    * zero size
+    * tmpfs
+
   * ftruncate()
 
-* producer (`shm/030-shm-produce.cc`): shm_open WRONLY, mmap MAP_SHARED
+* producer (`shm/030-shm-produce.cc`): shm_open WRONLY (no RDWR, wont
+  work), mmap MAP_SHARED
+* consumer (`shm/040-shm-consume.cc`)
 
-* todo
+Semaphores
+----------
 
-  * read periodically
+* create, init value 7 (`shm/100-sem-create.cc`)
+* wait (`shm/110-sem-wait.cc`)
+* post (`shm/120-sem-post.cc`)

@@ -8,3 +8,4 @@ librt = cc.find_library('rt') # POSIX message queues are there, at
 subdir('lib')
 subdir('unittests')
 subdir('topics')
+subdir('trainings')

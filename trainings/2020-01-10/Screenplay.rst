@@ -1,8 +1,10 @@
 .. contents:: Table of Contents
 
+IPC in Linux
+============
 
 Signals
-=======
+-------
 
 (start out with manual compiler invocation)
 
@@ -66,11 +68,8 @@ Signals
 
     so wtf?
 
-Virtual Memory, POSIX Shared Memory
-===================================
-
-Virtual Memory Basics
----------------------
+Virtual Memory, `mmap()`
+------------------------
 
 * `mmap` to read `/etc/passwd` (`shm/010-mmap.cc`)
 
@@ -79,8 +78,8 @@ Virtual Memory Basics
   * strace to see how address space is prepared
   * file mappings vs. anonymous
 
-Shared Memory
--------------
+POSIX Shared Memory
+-------------------
 
 * shm_open/O_CREAT -> open (`shm/020-shm-create.cc`)
 
@@ -96,9 +95,32 @@ Shared Memory
   work), mmap MAP_SHARED
 * consumer (`shm/040-shm-consume.cc`)
 
-Semaphores
-----------
+POSIX Semaphores
+----------------
 
 * create, init value 7 (`shm/100-sem-create.cc`)
 * wait (`shm/110-sem-wait.cc`)
 * post (`shm/120-sem-post.cc`)
+
+POSIX Message Queues
+--------------------
+
+* create (`mq/100-mq-create.cc`)
+
+  * omit the initial '/' in name -> rtfm!!
+  * think about messages
+  * measurement sample: (channel, timestamp, value). think about sizes
+    and datatypes. alignment :-)
+  * create the queue
+  * mount the mqueue-fs, and look into it::
+
+      # mkdir mqueue-mount
+      # mount -t mqueue blah mqueue-mount
+
+* produce (`mq/020-mq-produce.cc`)
+
+  * produce a number of items, and see what mqueue-fs says
+
+* consume (`mq/030-mq-consume.cc`)
+
+  * show how it blocks when queue is empty
